@@ -1,1 +1,107 @@
+## PREREQUISITES
+
+1. Install Python 3.x
+    - Go to: https://www.python.org/downloads/ and select the most recent release of Python 3.
+
+2. Install Python 2.x
+    - Go to: https://www.python.org/downloads/ and select the most recent release of Python 2.7.
+    - Add a path to Python 2 by following the directions at: https://geek-university.com/python/add-python-to-the-windows-path/
+        - Add the path to Python27 (e.g. `;C:\Python27`) instead of Python34 listed in the guide.
+        - WARNING: do not delete existing variables! 
+          When following the guide, have a terminal open as a precaution.
+          If you accidently delete variables you can recover variables with `echo %PATH%` in the terminal and paste what is printed back into the variable.
+          ---------This can only be done if a terminal was ALREADY open---------
+    - Go to the location of your Python27 folder and find python.exe
+        - Change the name from python.exe to python2.exe
+        - Now when you want to execute code with python 2 instead of 3, use the command `python2 file.py`
+
+
+3. Install pip by following the instructions at: https://pip.pypa.io/en/stable/installing/
+   - On Windows, ensure the install location (e.g. `;C:\Python27\Scripts`) is added to your PATH environment variable.
+       * Note: Do this the same way as above: https://geek-university.com/python/add-python-to-the-windows-path/
+   
+4. Install Tkinter by following the instructions to install Tk at: https://tkdocs.com/tutorial/install.html
+
+5. Run this command from the command line to install dotenv on python2:
+    - `python2 -m pip install python-dotenv`
+
+6. Run this command from the command line to install dateutil on python2:
+    - `python2 -m pip install python-dateutil`
+    
+7. Run this command from the command line to install dateutil on python3:
+    - `python install python-dateutil`
+    
+    
+    
+## SETUP
+
+1. Clone the repository or download and extract the Zip archive.
+
+2. Get your Carpe Diem user details and secret (ONE TIME SETUP).
+
+   - Copy `.env.example` to `.env` (hint: `copy .env.example .env` on Windows)
+   - Replace the placeholders within `.env`, including the `<` `>` characters with the values derived from the steps below. Ensure the last line is blank.
+   
+   To get the above values, proxy your phone through your computer:
+   
+   1. Install Carpe Diem Mobile on your phone and ensure you can login and submit entries. Typically available via your corporate intranet site or IT department.
+   2. Connect your phone and computer to the same network.
+       * Note: Some corporate and public wifi networks block these requests, so using your own wifi network is preferred.
+       * Note: This was found to work best on a personal laptop rather than a work laptop.
+   3. Download Charles from: https://www.charlesproxy.com/documentation/installation/
+   
+   For a visual of steps 4-9 go to: https://community.tealiumiq.com/t5/Tealium-for-iOS/Setting-Up-Charles-to-Proxy-an-iOS-Device/ta-p/15285
+   4. In Charles open up Proxy > Proxy Settings... menu and on the Proxy tab enter "8888" as the HTTP Proxy Port.
+   5. Open the SSL Proxying Settings... menu and on the SSL Proxying tab check Enable SSL Proxying.
+   6. Go to Help > SSL Proxying > Install Charles Root Certification a Mobile Device or Remote Browser...
+       * Make note of the IP address and the URL listed.
+   7. On your IOS device go to Settings > Wifi and click on the blue info icon next to the Wifi network that both your phone and computer are connected to.
+   8. Click on Configure Proxy (under HTTP Proxy) and choose Manual. Set the Server to the IP address from step 6 and the port to "8888".
+   9. Run Charles and accept the connection from your phone (A prompt will pop up).
+   
+   Instructions for steps 10-11 derived from https://www.charlesproxy.com/documentation/using-charles/ssl-certificates/ under iOS devices
+   10. On your iOS device in Safari go to: https://chls.pro/ssl - Safari will prompt you to install the SSL certificate.
+   11. On your iOS device go to General > About > Certificate Trust Settings and switch the Charles Proxy CA to enable full trust for root certificates.
+
+   12. In Charles under Proxy tab uncheck Windows Proxy (now only iOS information will be displayed).
+   13. With Charles recording, submit a time entry from Carpe Diem Mobile and watch for a request to `cdmobile/TimeKMSV.asp` (Hint: Look under URLs related to your corporate domain).
+   14. Click on the request `cdmobile/TimeKMSV.asp` and note the id, key, dev and udid under the contents tab. Enter these values in the `.env` file.
+   15. Note the full URL in the Overview tab and use it to replace the value for `url` in the `.env` file.
+        * Note: If you cannot see your Carpe Diem request information do the following:
+           1. With Charles recording, submit a time entry from Carpe Diem Mobile and watch for a request to `cdmobile/TimeKMSV.asp`.
+           2. Note the domain in the request.
+               * In Charles setup SSL proxying: Proxy > SSL Proxying Settings > SSL Proxying > Add Location: <your-corporate-carpe-diem-domain>:443
+           3. Try steps 13-15 again.
+   16. On your phone, remove the manual proxy from your network settings .
+   17. On your phone, remove the trust setting for the Charles SSL certificate.
+   
+  
+    
+## USAGE
+
+Keep track of your time entries using Time_Entry_Template.xlsm.
+   - Ensure that the sheet with your entries is titled Time_Entry.
+   - Do not change the format of the Excel file.
+   - Add in new matter codes to the drop down by adding them to Matter_Codes sheet.
+   - Default descriptions for a matter code can be set in the Matter_Codes sheet.
+   - If an additional description is to be added to the default, put it in the Additional Description column next to the entry.
+   - If additional description fields are the same for one matter code, it will only be used in the summary once.
+   - Any differing text in the additional description fields for one matter code will be concatenated together with ". "
+   - Add in new jurisdictions to the drop down by adding them to the Jurisdiction sheet.
+   - Set your default jurisdiction in cell G2 - This will be used when the "Jurisdiction Change?" field is left empty.
+   - Run a summary for all entries you wish to submit. 
+   - Review the summary for the entries you wish to submit (in fields V-AB). 
+
+Run `python to_csv.py` from a terminal.
+   - You will be prompted to enter the range of dates you would submit to Carpe Diem.
+   - Next, select the Excel file `Time_Entry_Template.xlsm` where you have your entries stored.
+   - A summary of the entries you wish to submit will be displayed along with the number of entries that use the default jurisdiction.
+        * You will be asked to confirm that they are correct.
+   - Your entries will be saved to a file called `time_to_submit.csv`
+   
+Run python2 importy.py from a terminal.
+   - Select the `time_to_submit.csv` file.
+   - You will be asked to confirm that you want to submit x number of entries to Carpe Diem.
+   
+Log into Carpe Diem and close the entries.
 
