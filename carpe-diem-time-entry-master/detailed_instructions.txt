@@ -91,6 +91,7 @@ Keep track of your time entries using Time_Entry_Template.xlsm.
    - Set your default jurisdiction in cell G2 - This will be used when the "Jurisdiction Change?" field is left empty.
    - Run a summary for all entries you wish to submit. 
    - Review the summary for the entries you wish to submit (in fields V-AB). 
+   - Close `Time_Entry_Template.xlsm` before running to_csv.py
 
 Run `python to_csv.py` from a terminal.
    - You will be prompted to enter the range of dates you would submit to Carpe Diem.

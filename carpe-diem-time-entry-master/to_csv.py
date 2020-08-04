@@ -96,7 +96,7 @@ def get_excel_data():
     print('Opening dialog where you can choose the Excel file to import...')
     Tk().withdraw()
     file_path = filedialog.askopenfilename(defaultextension=".xlsm", filetypes=(("Excel file", "*.xlsm"),("All Files", "*.*") ))
-    wb = load_workbook(file_path, read_only=True)
+    wb = load_workbook(file_path, read_only=True, data_only = True)
     
     
     #Setting the sheet to the time entry sheet
@@ -176,15 +176,20 @@ def get_excel_data():
         cell_num += 1     
     
         
+   
+    # Display the entries to be added to the csv
+    for z in range(0, len(dates)):
+        print(str(dates[z]) + ": " + str(hours[z]) + " -- " +  str(matters[z]) 
+                 + " -- " + str(clients[z]) + " -- " + str(tasks[z]) + " -- " + 
+                 str(jurisdictions[z]) + " -- " + str(descriptions[z]))
     if count_defaults != 0:
-        # Display the entries to be added to the csv
-        for z in range(0, len(dates)):
-            print(str(dates[z]) + ": " + str(hours[z]) + " -- " +  str(matters[z]) 
-                  + " -- " + str(clients[z]) + " -- " + str(tasks[z]) + " -- " + 
-                  str(jurisdictions[z]) + " -- " + str(descriptions[z]))
         if False == confirm(str(count_defaults) + " entries are using the default jurisdiction "
-                            + str(ws['G2'].value) + " and the entries shown will be added to the csv." +"\nWould you like to continue?"):
+                    + str(ws['G2'].value) + " and the entries shown will be added to the csv." +"\nWould you like to continue?"):
             exit()
+    else:
+        if False == confirm("The entries shown will be added to the csv." +"\nWould you like to continue?"):
+            exit()
+            
             
     if len(dates) <= 0:
         print("No entries found for" + str(from_date) +" - "+ str(to_date))
