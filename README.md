@@ -1,2 +1,2 @@
 # time_entry
-See detailed_instructions.txt for prerequisites, setup and usage
+See detailed_instructions.txt for prerequisites, setup and usage.
