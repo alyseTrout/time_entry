@@ -31,8 +31,8 @@ from decimal import Decimal
 env = {}
 submission_delay = .1
 print_styles = {
-    'WARNING': '\033[91m',
-    'ENDC': '\033[0m'
+    'WARNING': '',
+    'ENDC': ''
 }
 default_max_hours_per_entry = 4
 
@@ -286,12 +286,12 @@ def print_message(message, color_sequence, borders = False):
         print(color_sequence + ('*' * message_width) + CLIColorSequences.end_code)
 
 class CLIColorSequences:
-    header = '\033[95m'
-    ok_blue = '\033[94m'
-    ok_green = '\033[92m'
-    warning = '\033[93m'
-    failure = '\033[91m'
-    end_code = '\033[0m'
-    bold = '\033[1m'
-    underline = '\033[4m'
+    header = ''
+    ok_blue = ''
+    ok_green = ''
+    warning = ''
+    failure = ''
+    end_code = ''
+    bold = ''
+    underline = ''
 
