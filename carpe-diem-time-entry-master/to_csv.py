@@ -126,7 +126,7 @@ def get_excel_data():
                     
                     # Adding hours if cell is populated
                     if ws['W'+str(cell_num)].value:
-                        hours.append(float(ws['W'+str(cell_num)].value))
+                        hours.append(round(float(ws['W'+str(cell_num)].value), 1))
                     else:
                         print("***********************WARNING***********************")
                         print("Please ensure the number of hours is included in every entry. Cell W" + str(cell_num) + " is missing number of hours.")
