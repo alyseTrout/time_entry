@@ -175,7 +175,11 @@ def get_excel_data():
         # Incrementing the cell row value
         cell_num += 1     
     
-        
+     
+    if len(dates) <= 0:
+        print("No entries found for " + human_date(from_date) +" - "+ human_date(to_date))
+        exit()
+           
    
     # Display the entries to be added to the csv
     for z in range(0, len(dates)):
@@ -190,12 +194,6 @@ def get_excel_data():
         if False == confirm("The entries shown will be added to the csv." +"\nWould you like to continue?"):
             exit()
             
-            
-    if len(dates) <= 0:
-        print("No entries found for" + str(from_date) +" - "+ str(to_date))
-        exit()
-        
-    #
     
     create_csv()   
 
